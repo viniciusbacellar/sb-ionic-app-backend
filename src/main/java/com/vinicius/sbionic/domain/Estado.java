@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "tb_estado")
 public class Estado implements Serializable{
@@ -22,6 +24,9 @@ public class Estado implements Serializable{
 	private Integer id;
 	private String nome;
 	
+	
+	// anotação que omite com que seja mostrado as cidades em uma requisição de Estado
+	@JsonBackReference
 	// @OneToMany mappedBy com o nome do atributo que a classe atual foi instancia do outro lado
 	// no qual o nome foi "estado"
 	@OneToMany(mappedBy="estado")
