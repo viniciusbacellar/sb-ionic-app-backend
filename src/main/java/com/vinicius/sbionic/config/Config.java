@@ -12,6 +12,7 @@ import com.vinicius.sbionic.domain.Cidade;
 import com.vinicius.sbionic.domain.Cliente;
 import com.vinicius.sbionic.domain.Endereco;
 import com.vinicius.sbionic.domain.Estado;
+import com.vinicius.sbionic.domain.ItemPedido;
 import com.vinicius.sbionic.domain.Pagamento;
 import com.vinicius.sbionic.domain.PagamentoComBoleto;
 import com.vinicius.sbionic.domain.PagamentoComCartao;
@@ -24,6 +25,7 @@ import com.vinicius.sbionic.repositories.CidadeRepository;
 import com.vinicius.sbionic.repositories.ClienteRepository;
 import com.vinicius.sbionic.repositories.EnderecoRepository;
 import com.vinicius.sbionic.repositories.EstadoRepository;
+import com.vinicius.sbionic.repositories.ItemPedidoRepository;
 import com.vinicius.sbionic.repositories.PagamentoRepository;
 import com.vinicius.sbionic.repositories.PedidoRepository;
 import com.vinicius.sbionic.repositories.ProdutoRepository;
@@ -47,6 +49,8 @@ public class Config implements CommandLineRunner {
 	private PedidoRepository repoPed;
 	@Autowired
 	private PagamentoRepository repoPag;
+	@Autowired
+	private ItemPedidoRepository repoItemPed;
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -111,6 +115,20 @@ public class Config implements CommandLineRunner {
 		
 		repoPed.saveAll(Arrays.asList(ped1, ped2));
 		repoPag.saveAll(Arrays.asList(pagto1, pagto2));
+		
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+
+		repoItemPed.saveAll(Arrays.asList(ip1, ip2, ip3));
+		
 	}
 
 }
