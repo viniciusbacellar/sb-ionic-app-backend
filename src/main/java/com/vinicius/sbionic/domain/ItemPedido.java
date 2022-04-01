@@ -6,10 +6,14 @@ import java.util.Objects;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemPedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
+	// Ignora a serialização da classe Pedido e Produto
+	@JsonIgnore
 	// Anotação feita para embutir um id em um tipo auxiliar
 	@EmbeddedId
 	// classe auxiliar que precisa ser instanciada
@@ -33,10 +37,12 @@ public class ItemPedido implements Serializable{
 		this.preco = preco;
 	}
 	
+	@JsonIgnore
 	// OBS:. Criar metodos de get para facilitar o acesso aos objetos fora da classe ItemPedido
 	public Pedido getPedido() {
 		return id.getPedido();
 	}
+	
 	
 	public Produto getProduto() {
 		return id.getProduto();

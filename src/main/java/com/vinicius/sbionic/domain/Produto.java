@@ -18,6 +18,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "tb_produto")
@@ -40,6 +41,7 @@ public class Produto implements Serializable {
 	inverseJoinColumns = @JoinColumn(name = "categoria_id"))
 	private List<Categoria> categorias = new ArrayList<>();
 
+	@JsonIgnore
 	// Mapear com o produto da classe PK(id.produto) acessado por meio da classe ItemPedido
 	@OneToMany(mappedBy="id.produto")
 	// utilizando Set para garantir que não haverá item repetido no pedido
@@ -55,6 +57,7 @@ public class Produto implements Serializable {
 		this.preco = preco;
 	}
 	
+	@JsonIgnore
 	// OBS:. Sempre colocar get no começo dos nomes dos métodos para
 	// respeitar o padrão beans do java
 	public List<Pedido> getPedidos() {
