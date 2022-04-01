@@ -11,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 @Entity
 @Table(name = "tb_cidade")
 public class Cidade implements Serializable{
@@ -24,7 +22,6 @@ public class Cidade implements Serializable{
 	private String nome;
 	
 	// anotação que faz com que seja possivel visualizar a lista de endereço na requisição
-	@JsonManagedReference
 	@ManyToOne
 	// @JoinColumn cria a chave estrangeira de estado na tabela Cidade(classe atual)
 	@JoinColumn(name = "estado_id")
