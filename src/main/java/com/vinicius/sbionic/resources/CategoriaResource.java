@@ -1,6 +1,8 @@
 package com.vinicius.sbionic.resources;
 
 import java.net.URI;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.vinicius.sbionic.domain.Categoria;
+import com.vinicius.sbionic.dto.CategoriaDTO;
 import com.vinicius.sbionic.services.CategoriaService;
 
 @RestController
@@ -26,6 +29,15 @@ public class CategoriaResource {
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		Categoria obj = service.find(id);
 		return ResponseEntity.status(HttpStatus.OK).body(obj);
+	}
+	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		List<Categoria> list = service.findAll();
+		// Converte uma lista de objetos para objetosDTO
+		List<CategoriaDTO> listDto = list.stream()
+				.map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(listDto);
 	}
 
 	@RequestMapping(method = RequestMethod.POST)
