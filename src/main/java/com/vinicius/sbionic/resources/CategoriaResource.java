@@ -5,12 +5,14 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -37,6 +39,20 @@ public class CategoriaResource {
 		// Converte uma lista de objetos para objetosDTO
 		List<CategoriaDTO> listDto = list.stream()
 				.map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		return ResponseEntity.status(HttpStatus.OK).body(listDto);
+	}
+	
+	@RequestMapping(value="/page", method = RequestMethod.GET)
+	public ResponseEntity<Page<CategoriaDTO>> findPage(
+			// Anotação para fazer os parâmetros receberem o valor durante a requisição
+			// value = nome da variável / deafultValue = valor padrão caso a variavel fique sem valor
+			@RequestParam(value="page", defaultValue="0") Integer page,
+			@RequestParam(value="linesPerPage", defaultValue="24")Integer linesPerPage,
+			@RequestParam(value="orderBy", defaultValue="nome")String orderBy,
+			@RequestParam(value="direction", defaultValue="ASC")String direction) {
+		Page<Categoria> list = service.findPage(page, linesPerPage, orderBy, direction);
+		// Converte uma lista de objetos para objetosDTO
+		Page<CategoriaDTO> listDto = list.map(obj -> new CategoriaDTO(obj));
 		return ResponseEntity.status(HttpStatus.OK).body(listDto);
 	}
 
