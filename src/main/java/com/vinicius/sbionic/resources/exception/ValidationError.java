@@ -12,6 +12,7 @@ public class ValidationError extends StandardError {
 		super(status, msg, timeStamp);
 	}
 
+	// sufixo do get para mudar o nome da lista para Erros
 	public List<FieldMessage> getErrors() {
 		return errors;
 	}
