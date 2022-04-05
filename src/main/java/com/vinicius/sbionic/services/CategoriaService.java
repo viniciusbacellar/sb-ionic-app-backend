@@ -11,7 +11,6 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.vinicius.sbionic.domain.Categoria;
-import com.vinicius.sbionic.domain.Cliente;
 import com.vinicius.sbionic.dto.CategoriaDTO;
 import com.vinicius.sbionic.repositories.CategoriaRepository;
 import com.vinicius.sbionic.services.exceptions.DataIntegrityException;
