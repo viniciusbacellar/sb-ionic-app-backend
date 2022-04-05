@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.vinicius.sbionic.domain.Categoria;
+import com.vinicius.sbionic.domain.Cliente;
 import com.vinicius.sbionic.dto.CategoriaDTO;
 import com.vinicius.sbionic.repositories.CategoriaRepository;
 import com.vinicius.sbionic.services.exceptions.DataIntegrityException;
@@ -43,8 +44,9 @@ public class CategoriaService {
 	}
 
 	public Categoria update(Categoria obj) {
-		find(obj.getId());
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateDate(newObj, obj);
+		return repo.save(newObj);
 	}
 
 	public void delete(Integer id) {
@@ -59,5 +61,9 @@ public class CategoriaService {
 	// Método auxiliar para transferir os dados do DTO e instanciar um objeto Categoria
 	public Categoria fromDTO(CategoriaDTO objDto) {
 		return new Categoria(objDto.getId(), objDto.getNome());
+	}
+	
+	private void updateDate(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
 	}
 }
