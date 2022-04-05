@@ -11,6 +11,7 @@ import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 
 import com.vinicius.sbionic.domain.Categoria;
+import com.vinicius.sbionic.dto.CategoriaDTO;
 import com.vinicius.sbionic.repositories.CategoriaRepository;
 import com.vinicius.sbionic.services.exceptions.DataIntegrityException;
 import com.vinicius.sbionic.services.exceptions.ObjectNotFoundException;
@@ -53,5 +54,10 @@ public class CategoriaService {
 		} catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir uma categoria que possui produtos");
 		}
+	}
+	
+	// Método auxiliar para transferir os dados do DTO e instanciar um objeto Categoria
+	public Categoria fromDTO(CategoriaDTO objDto) {
+		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 }
