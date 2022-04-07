@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.CollectionTable;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
@@ -34,7 +35,7 @@ public class Cliente implements Serializable{
 	
 	
 	// anotação que faz com que seja possivel visualizar a lista de endereço na requisição
-	@OneToMany(mappedBy="cliente")
+	@OneToMany(mappedBy="cliente", cascade = CascadeType.ALL)
 	private List<Endereco> enderecos = new ArrayList<>();
 	
 	@ElementCollection
