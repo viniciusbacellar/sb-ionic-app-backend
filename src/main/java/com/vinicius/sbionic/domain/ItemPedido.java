@@ -37,6 +37,11 @@ public class ItemPedido implements Serializable{
 		this.preco = preco;
 	}
 	
+	public double getSubTotal() {
+		return (preco - desconto) * quantidade;
+	}
+	
+	
 	@JsonIgnore
 	// OBS:. Criar metodos de get para facilitar o acesso aos objetos fora da classe ItemPedido
 	public Pedido getPedido() {
