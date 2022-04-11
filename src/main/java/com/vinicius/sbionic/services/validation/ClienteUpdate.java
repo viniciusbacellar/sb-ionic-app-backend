@@ -10,10 +10,10 @@ import javax.validation.Payload;
 
 // Classe(ClienteInsert) que cria a anotação padrão com nome da interface e a mensagem de error
 // ClienteInsertValidator(sufixo - Validator) é a classe na qual a validação será implementada
-@Constraint(validatedBy = ClienteInsertValidator.class)
+@Constraint(validatedBy = ClienteUpdateValidator.class)
 @Target({ ElementType.TYPE })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ClienteInsert {
+public @interface ClienteUpdate {
 	String message() default "Erro de validação";
 
 	Class<?>[] groups() default {};
