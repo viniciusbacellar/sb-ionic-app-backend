@@ -2,9 +2,12 @@ package com.vinicius.sbionic.domain;
 
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonTypeName;
 import com.vinicius.sbionic.domain.enums.EstadoPagamento;
 
 @Entity
+// Nome do tipo que será instanciado para o JSON
+@JsonTypeName("pagamentoComCartao")
 public class PagamentoComCartao extends Pagamento{
 	private static final long serialVersionUID = 1L;
 	
