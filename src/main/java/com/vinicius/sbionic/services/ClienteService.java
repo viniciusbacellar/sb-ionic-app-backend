@@ -15,11 +15,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.vinicius.sbionic.domain.Cidade;
 import com.vinicius.sbionic.domain.Cliente;
 import com.vinicius.sbionic.domain.Endereco;
+import com.vinicius.sbionic.domain.enums.Perfil;
 import com.vinicius.sbionic.domain.enums.TipoCliente;
 import com.vinicius.sbionic.dto.ClienteDTO;
 import com.vinicius.sbionic.dto.ClienteNewDTO;
 import com.vinicius.sbionic.repositories.ClienteRepository;
 import com.vinicius.sbionic.repositories.EnderecoRepository;
+import com.vinicius.sbionic.security.UserSS;
+import com.vinicius.sbionic.services.exceptions.AuthorizationException;
 import com.vinicius.sbionic.services.exceptions.DataIntegrityException;
 import com.vinicius.sbionic.services.exceptions.ObjectNotFoundException;
 
@@ -37,6 +40,12 @@ public class ClienteService {
 	
 
 	public Cliente find(Integer id) {
+		
+		UserSS user = UserService.authenticated();
+		if(user==null || !user.hasRole(Perfil.ADMIN) && !id.equals(user.getId())) {
+			throw new AuthorizationException("Acesso negado");
+		}
+		
 		Optional<Cliente> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 		 "Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
